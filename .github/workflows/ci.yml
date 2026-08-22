@@ -9,6 +9,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: ankane/pgvector:latest
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+      SECRET_KEY: ci-test-key
+
     steps:
     - uses: actions/checkout@v4
 
@@ -23,5 +43,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Lint with Ruff
-      run: |
-        ruff check .
+      run: ruff check .
+
+    - name: Run Tests
+      run: pytest

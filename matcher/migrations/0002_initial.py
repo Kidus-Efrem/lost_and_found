@@ -9,6 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('matcher', '0001_enable_vector'),
     ]
 
     operations = [
