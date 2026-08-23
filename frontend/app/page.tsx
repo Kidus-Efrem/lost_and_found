@@ -117,7 +117,8 @@ function LandingPage({ onNav }: { onNav: (v: View) => void }) {
 }
 
 function FoundForm({ onNav }: { onNav: (v: View) => void }) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  // const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://lost-and-found-57gy.onrender.com";
   const [form, setForm] = useState<FoundReport>({ description: "", dateFound: "", locationFound: "", method: "desk", location: "", contactEmail: "" });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -234,10 +235,11 @@ function LostForm({ onNav, onSearch }: { onNav: (v: View) => void; onSearch: (q:
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSearching(true);
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    // const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://lost-and-found-57gy.onrender.com";
 
     try {
-      const response = await fetch(`${API_URL}/api/found`, {
+      const response = await fetch(`${API_URL}/api/found/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
