@@ -239,7 +239,7 @@ function LostForm({ onNav, onSearch }: { onNav: (v: View) => void; onSearch: (q:
     const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
     try {
-      const response = await fetch(`${API_URL}/api/found/`, {
+      const response = await fetch(`${API_URL}/api/lost/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
