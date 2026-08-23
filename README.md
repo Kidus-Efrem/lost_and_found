@@ -6,6 +6,28 @@ Instead of relying purely on keyword matching, the system understands that diffe
 
 ---
 
+## 📚 Table of Contents
+
+* [✨ Features](#-features)
+* [🏗️ Approach & Architecture](#️-approach--architecture)
+* [🧠 How the Matching System Works](#-how-the-matching-system-works)
+
+  * [Embedding Generation](#1-embedding-generation)
+  * [Vector Similarity Search](#2-vector-similarity-search)
+  * [Contextual Location Boost](#3-contextual-location-boost)
+  * [Confidence Tiers](#4-confidence-tiers)
+* [🛠️ Tech Stack](#️-tech-stack)
+* [📐 Important Assumptions](#-important-assumptions)
+* [🛠️ Major Technical Decisions](#️-major-technical-decisions)
+* [🚫 What I Intentionally Chose Not to Build](#-what-i-intentionally-chose-not-to-build)
+* [🚀 What I Would Improve for a Real Product](#-what-i-would-improve-for-a-real-product)
+* [📁 Project Structure](#-project-structure)
+* [🛠️ Local Development Setup](#️-local-development-setup)
+* [🤖 AI Usage Disclosure](#-ai-usage-disclosure)
+* [📄 License](#-license)
+
+---
+
 ## ✨ Features
 
 * 🔎 **Semantic Search** — Finds relevant items even when users use different words to describe them.
@@ -19,7 +41,9 @@ Instead of relying purely on keyword matching, the system understands that diffe
 
 ## 🏗️ Approach & Architecture
 
-The application was built as an end-to-end full-stack campus utility focused on solving a common problem: **users rarely describe the same item using exactly the same vocabulary.**
+The application was built as an end-to-end full-stack campus utility focused on solving a common problem:
+
+> **Users rarely describe the same item using exactly the same vocabulary.**
 
 Instead of relying on brittle keyword matching, the system uses **dense vector embeddings** to capture the semantic meaning of item descriptions.
 
@@ -34,38 +58,26 @@ Instead of relying on brittle keyword matching, the system uses **dense vector e
            │ REST API
            ▼
 ┌─────────────────────┐
-│   Django + DRF      │
+│     Django + DRF    │
 │                     │
-│  Matching Service   │
-│  Business Logic     │
+│   Matching Service  │
+│   Business Logic    │
 └──────────┬──────────┘
            │
-     ┌─────┴─────┐
-     │           │
-     ▼           ▼
+      ┌────┴────┐
+      │         │
+      ▼         ▼
 ┌──────────┐  ┌─────────────────────┐
 │PostgreSQL│  │ Sentence Transformer│
 │+pgvector │  │ all-MiniLM-L6-v2    │
 └──────────┘  └─────────────────────┘
 ```
 
-### Core Stack
-
-| Layer            | Technology                     |
-| ---------------- | ------------------------------ |
-| Frontend         | Next.js, React, Tailwind CSS   |
-| Backend          | Django, Django REST Framework  |
-| Database         | PostgreSQL + `pgvector`        |
-| Machine Learning | PyTorch, Sentence Transformers |
-| Embedding Model  | `all-MiniLM-L6-v2`             |
-| Server           | Gunicorn, Whitenoise           |
-| Configuration    | `django-environ`               |
-
 ---
 
 ## 🧠 How the Matching System Works
 
-The matching system combines **dense vector similarity** with a small **contextual location boost** to classify results into confidence tiers.
+The matching system combines **dense vector similarity** with a **contextual location boost** to classify results into confidence tiers.
 
 ### 1. Embedding Generation
 
@@ -132,9 +144,9 @@ The final score is capped at **99%** and categorized into confidence levels:
 | **50–74%** | 🟡 Possible Match  | Some meaningful similarity, but the match is less certain      |
 |  **< 50%** | ⚪ No Match         | Does not meet the minimum similarity threshold                 |
 
-For example:
+#### Example
 
-**Query:**
+**Lost item:**
 
 > "wireless earbuds"
 
@@ -142,7 +154,21 @@ For example:
 
 > "JBL pods in a black case"
 
-The descriptions may receive a high semantic similarity score even though they do not share the exact same keywords.
+The descriptions can receive a high semantic similarity score even though they do not contain exactly the same keywords.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer                | Technology                     |
+| -------------------- | ------------------------------ |
+| **Frontend**         | Next.js, React, Tailwind CSS   |
+| **Backend**          | Django, Django REST Framework  |
+| **Database**         | PostgreSQL + `pgvector`        |
+| **Machine Learning** | PyTorch, Sentence Transformers |
+| **Embedding Model**  | `all-MiniLM-L6-v2`             |
+| **Server**           | Gunicorn, Whitenoise           |
+| **Configuration**    | `django-environ`               |
 
 ---
 
@@ -237,7 +263,7 @@ User submits item
 Generate Embedding
        │
        ▼
-Store Vector
+   Store Vector
 ```
 
 This would prevent ML processing from blocking API requests and help maintain fast response times as the application scales.
