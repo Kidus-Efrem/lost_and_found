@@ -14,6 +14,7 @@ class FoundItem(models.Model):
     holding_status = models.CharField(max_length=15, choices=STATUS_CHOICES)
     location_details = models.CharField(max_length=100, blank=True, null=True)
     contact_email = models.EmailField(blank=True, null=True)
+    location_found = models.CharField(max_length=255, blank=True, null=True)
 
     # The Semantic Vector
     embedding = VectorField(dimensions=384, blank=True, null=True)

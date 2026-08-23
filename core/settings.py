@@ -11,7 +11,7 @@ environ.Env.read_env(BASE_DIR / '.env')
 # 3. Security settings
 SECRET_KEY = env('SECRET_KEY', default='unsafe-dev-key')
 DEBUG = True
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.onrender.com', '.vercel.app']
 
 # Application definition
 
@@ -25,14 +25,16 @@ INSTALLED_APPS = [
     # Third-party
     'rest_framework',
     'pgvector.django',
-
+    'corsheaders',
     # Local app
     'matcher',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -113,3 +115,6 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# CORS Settings
+CORS_ALLOW_ALL_ORIGINS = True
