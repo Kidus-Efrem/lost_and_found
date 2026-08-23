@@ -1,6 +1,7 @@
 from django.db import models
 from pgvector.django import VectorField
 
+
 class FoundItem(models.Model):
     STATUS_CHOICES = [
         ('AT_DESK', 'Dropped off at a campus desk'),

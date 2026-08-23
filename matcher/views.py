@@ -1,10 +1,12 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from pgvector.django import CosineDistance
 from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import FoundItem
 from .serializers import FoundItemSerializer, LostItemSerializer
 from .services import generate_embedding
-from pgvector.django import CosineDistance
-from .models import FoundItem
+
 
 class SubmitFoundItemView(APIView):
     def post(self, request):

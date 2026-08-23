@@ -1,0 +1,9 @@
+[tool.ruff]
+# Set the line length to match modern standards or ignore E501 globally
+[tool.ruff.lint]
+select = ["E", "F", "I", "RUF"]
+ignore = ["RUF012", "E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"reset_db.py" = ["E402"]
+"matcher/migrations/*.py" = ["E501"]

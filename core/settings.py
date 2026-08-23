@@ -1,6 +1,7 @@
 import os
-import environ
 from pathlib import Path
+
+import environ
 
 # 1. Define BASE_DIR first
 BASE_DIR = Path(__file__).resolve().parent.parent
