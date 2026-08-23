@@ -118,7 +118,7 @@ function LandingPage({ onNav }: { onNav: (v: View) => void }) {
 
 function FoundForm({ onNav }: { onNav: (v: View) => void }) {
   // const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://lost-and-found-57gy.onrender.com";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
   const [form, setForm] = useState<FoundReport>({ description: "", dateFound: "", locationFound: "", method: "desk", location: "", contactEmail: "" });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -236,7 +236,7 @@ function LostForm({ onNav, onSearch }: { onNav: (v: View) => void; onSearch: (q:
     e.preventDefault();
     setSearching(true);
     // const API_URL = process.env.NEXT_PUBLIC_API_URL;
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://lost-and-found-57gy.onrender.com";
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
     try {
       const response = await fetch(`${API_URL}/api/found/`, {
